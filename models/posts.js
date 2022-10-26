@@ -11,7 +11,9 @@ const postsSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: new Date()
-  }
+  },
+  tags: [String],
+  file: String
 })
 
 const PostMessage = mongoose.model('PostMessage', postsSchema)
