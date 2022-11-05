@@ -8,10 +8,13 @@ import dotenv from 'dotenv'
 
 const app = express()
 
-app.use('/posts', postRoutes)
 app.use(bodyParser.json({limit: '30mb'}))
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}))
 app.use(cors())
+
+// #region Routes
+app.use('/posts', postRoutes)
+// #endregion
 
 dotenv.config({path: './.env'})
 
