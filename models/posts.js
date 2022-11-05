@@ -13,7 +13,7 @@ const postsSchema = mongoose.Schema({
     default: new Date()
   },
   tags: [String],
-  file: String
+  selectedFile: String
 })
 
 const PostMessage = mongoose.model('PostMessage', postsSchema)
