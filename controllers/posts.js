@@ -11,7 +11,13 @@ export const getPosts = async (req, res) => {
 }
 export const createPost = async (req, res) => {
   const post = req.body
-  const newPost = new PostMessage(post)
+  let {tags} = post
+  tags = tags.length ? tags.split(',') : tags
+  if (Array.isArray(tags)) {
+    tags = tags.map((tag) => tag.trim())
+  }
+
+  const newPost = new PostMessage({...post, tags})
   try {
     await newPost.save()
 
