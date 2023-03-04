@@ -4,6 +4,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 
 import postRoutes from './routes/posts.js'
+import authRoutes from './routes/auth.js'
 import dotenv from 'dotenv'
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(cors())
 
 // #region Routes
 app.use('/posts', postRoutes)
+app.use('/auth', authRoutes)
 // #endregion
 
 dotenv.config({path: './.env'})
