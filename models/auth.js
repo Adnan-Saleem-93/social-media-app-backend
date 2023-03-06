@@ -3,10 +3,13 @@ import mongoose from 'mongoose'
 const authSchema = mongoose.Schema({
   email: {type: String, required: true},
   password: {type: String, required: true},
-  firstName: String,
-  lastName: String,
+  name: String,
+  create_on: {
+    type: Date,
+    default: new Date(),
+  },
 })
 
-const Users = mongoose.model('Users', authSchema)
+const User = mongoose.model('User', authSchema)
 
-export default Users
+export default User
