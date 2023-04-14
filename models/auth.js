@@ -8,6 +8,10 @@ const authSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  isGoogleSignUp: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const User = mongoose.model('User', authSchema)
