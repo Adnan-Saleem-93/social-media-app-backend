@@ -6,6 +6,9 @@ const postsSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  likedBy: {
+    type: [String],
+  },
   author: String,
   createdAt: {
     type: Date,

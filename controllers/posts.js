@@ -39,3 +39,42 @@ export const getPostById = async (req, res) => {
     res.status(400).json({error: error.message})
   }
 }
+export const deletePost = async (req, res) => {
+  let postId = req.params.id
+
+  try {
+    const result = await PostMessage.findById(postId)
+    if (result) {
+      res.status(200).json(result)
+    }
+    res.status(400).json({error: 'Post not found!'})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+export const likePost = async (req, res) => {
+  let postId = req.params.id
+
+  try {
+    const result = await PostMessage.findById(postId)
+    if (result) {
+      res.status(200).json(result)
+    }
+    res.status(400).json({error: 'Post not found!'})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+export const unlikePost = async (req, res) => {
+  let postId = req.params.id
+
+  try {
+    const result = await PostMessage.findById(postId)
+    if (result) {
+      res.status(200).json(result)
+    }
+    res.status(400).json({error: 'Post not found!'})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
