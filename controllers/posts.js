@@ -1,10 +1,10 @@
-import PostMessage from '../models/posts.js'
+import Posts from '../models/posts.js'
 
 export const getPosts = async (req, res) => {
   try {
-    const postMessages = await PostMessage.find()
+    const posts = await Posts.find()
 
-    res.status(200).json(postMessages)
+    res.status(200).json(posts)
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -17,7 +17,7 @@ export const createPost = async (req, res) => {
     tags = tags.map((tag) => tag.trim())
   }
 
-  const newPost = new PostMessage({...post, tags})
+  const newPost = new Posts({...post, tags})
   try {
     await newPost.save()
 
@@ -30,7 +30,7 @@ export const getPostById = async (req, res) => {
   let postId = req.params.id
 
   try {
-    const result = await PostMessage.findById(postId)
+    const result = await Posts.findById(postId)
     if (result) {
       res.status(200).json(result)
     }
@@ -43,11 +43,17 @@ export const deletePost = async (req, res) => {
   let postId = req.params.id
 
   try {
-    const result = await PostMessage.findById(postId)
+    const result = await Posts.deleteOne({_id: postId})
     if (result) {
-      res.status(200).json(result)
+      const allPosts = await Posts.find()
+      if (allPosts) {
+        res.status(200).json(allPosts)
+      } else {
+        res.status(200).json(result)
+      }
+    } else {
+      res.status(400).json({error: 'Post not found!'})
     }
-    res.status(400).json({error: 'Post not found!'})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -56,7 +62,7 @@ export const likePost = async (req, res) => {
   let postId = req.params.id
 
   try {
-    const result = await PostMessage.findById(postId)
+    const result = await Posts.findById(postId)
     if (result) {
       res.status(200).json(result)
     }
@@ -69,7 +75,7 @@ export const unlikePost = async (req, res) => {
   let postId = req.params.id
 
   try {
-    const result = await PostMessage.findById(postId)
+    const result = await Posts.findById(postId)
     if (result) {
       res.status(200).json(result)
     }
