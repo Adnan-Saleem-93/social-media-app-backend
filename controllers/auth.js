@@ -15,7 +15,7 @@ export const loginUser = async (req, res) => {
         res.status(400).json({error: 'Incorrect Password.!'})
       } else {
         const token = jwt.sign(
-          {email: existingUser.email, name: existingUser.name},
+          {email: existingUser.email, name: existingUser.name, id: existingUser._id},
           'new_user_private_key',
           {
             expiresIn: '1h',

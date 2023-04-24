@@ -60,13 +60,45 @@ export const deletePost = async (req, res) => {
 }
 export const likePost = async (req, res) => {
   let postId = req.params.id
+  let userId = req.body.likedBy
 
   try {
-    const result = await Posts.findById(postId)
-    if (result) {
-      res.status(200).json(result)
+    const document = await Posts.findById(postId)
+    if (document) {
+      const isPostAlreadyLikedByUser = document.likedBy.includes(userId)
+      let result = null
+      if (!isPostAlreadyLikedByUser) {
+        result = await Posts.findByIdAndUpdate(
+          {_id: postId},
+          {
+            $push: {
+              likedBy: userId,
+            },
+          },
+          {new: true}
+        )
+      } else {
+        result = await Posts.findByIdAndUpdate(
+          {_id: postId},
+          {
+            $pull: {
+              likedBy: userId,
+            },
+          },
+          {new: true}
+        )
+      }
+      if (result) {
+        const allPosts = await Posts.find()
+        if (allPosts) {
+          res.status(200).json(allPosts)
+        } else {
+          res.status(200).json(result)
+        }
+      } else {
+        res.status(400).json({error: 'Post not found!'})
+      }
     }
-    res.status(400).json({error: 'Post not found!'})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
