@@ -7,13 +7,14 @@ import {
   likePost,
   unlikePost,
 } from '../controllers/posts.js'
+import {authorizeRequest} from '../middlewares/index.js'
 const router = express.Router()
 
-router.get('/', getPosts)
-router.post('/', createPost)
-router.get('/:id', getPostById)
-router.delete('/delete/:id', deletePost)
-router.put('/like/:id', likePost)
-router.put('/unlike/:id', unlikePost)
+router.get('/', authorizeRequest, getPosts)
+router.post('/', authorizeRequest, createPost)
+router.get('/:id', authorizeRequest, getPostById)
+router.delete('/delete/:id', authorizeRequest, deletePost)
+router.put('/like/:id', authorizeRequest, likePost)
+router.put('/unlike/:id', authorizeRequest, unlikePost)
 
 export default router
